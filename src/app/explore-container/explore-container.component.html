@@ -1,4 +1,18 @@
 <div id="container">
   <strong>{{ name }}</strong>
   <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+  <ion-list>
+    <p style="text-align: left" class="title-textarea" >Mein Bauerntagebuch</p>
+    <ion-item>
+      <ion-textarea [(ngModel)]="textAreaInput" class="textarea-dairy" placeholder=" Welche Probleme bestehen auf dem Hof?"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-buttons slot="secondary">
+    <ion-button fill="solid" class="button-send" (click)="sendMessageToDialogFlow()" >
+      <ion-icon slot="start" name="person-circle" ></ion-icon>
+      Nachricht senden
+    </ion-button>
+  </ion-buttons>
+  
 </div>
