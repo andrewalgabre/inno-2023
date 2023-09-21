@@ -30,20 +30,17 @@ export class ExploreContainerComponent {
     
     
     const recognition = new SpeechRecognition();
-    recognition.interimResults = true;
-    recognition.start();
 
+    addEventListener("audiostart", (event) => {});
 
+    const audiostart = document.querySelector('ion-fab-button');
 
-    let p = this.document.createElement('p');
-    const words = document.querySelector('.words');
-    // @ts-ignore
-    //words.appendChild(p);
-
-   
-    recognition.addEventListener('results', (e: any) => {
-      console.log(e);
+    recognition.addEventListener("audiostart", () => {
+      console.log("Audio capturing started");
     });
+    
+    
+    
 
     
   }
