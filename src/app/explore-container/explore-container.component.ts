@@ -30,14 +30,41 @@ export class ExploreContainerComponent {
     
     
     const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    
+    let p = document.createElement('p')
+    const words = document.querySelector('.words')
+    words?.appendChild(p);
+    recognition.addEventListener('result', (e: any) => {
+      console.log(e.result);
 
-    addEventListener("audiostart", (event) => {});
-
-    const audiostart = document.querySelector('ion-fab-button');
-
-    recognition.addEventListener("audiostart", () => {
-      console.log("Audio capturing started");
+      const transcript: any = Array.from(e.results)
+        .map(result => [0]) //result[0]
+        //.map(result => result.transcript)
+        //.join('')
+      
+      p.textContent = transcript;
+      
+      if(e.results[0].isFinal) {
+        p = document.createElement('p');
+        words?.appendChild(p);
+      }
+      
+      console.log(transcript)
     });
+    
+    recognition.addEventListener('end', recognition.start);
+    recognition.start();
+
+    // addEventListener("audiostart", (event) => {});
+    //
+    // const audiostart = document.querySelector('ion-fab-button');
+    //
+    // recognition.addEventListener("audiostart", () => {
+    //   console.log("Audio capturing started");
+    // });
+    
+    
     
     
     
