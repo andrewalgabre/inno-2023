@@ -13,7 +13,7 @@ export class IntentHandlerService {
   handleIntent(result: DialogflowResponse) {
     debugger;
     switch (result.intent) {
-      case 'UFA_GALLO_READ_WATERLEVEL_LITER':
+      case 'UFA_GALLO_UPDATE_WATERLEVEL_LITER':
         // let title = result.params.
         debugger;
         const waterAmount = result.params['wateramount']['numberValue'];
