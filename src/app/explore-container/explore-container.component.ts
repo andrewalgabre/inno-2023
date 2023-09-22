@@ -41,6 +41,7 @@ export class ExploreContainerComponent {
   }
 
   startListening() {
+    this.speechResult = '';
     const recognition = new this.SpeechRecognition();
     recognition.interimResults = true;
 

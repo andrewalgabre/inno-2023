@@ -10,14 +10,16 @@
 
   <div style="padding: 12px">
     <br />
-    <strong>{{ speechResult }}</strong>
+    <strong style="font-size: 24px; font-weight: 300">{{
+      speechResult
+    }}</strong>
 
     <br />
     <br />
 
-    <span style="color: blue; font-weight: 800"> {{ result.intent }}</span>
+    <span style="color: blue; font-weight: 800"> {{ result?.intent }}</span>
     <br />
-    <span style="font-style: italic"> {{ result.queryText }}</span>
+    <span style="font-style: italic"> {{ result?.queryText }}</span>
   </div>
 
   <ion-buttons slot="secondary">
