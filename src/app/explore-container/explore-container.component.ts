@@ -3,6 +3,8 @@ import { Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogFlowService } from '../services/dialog-flow.service';
 import { IntentHandlerService } from '../services/intent-handler.service';
+import {DailyTour} from "../model/daily-tour";
+import {UgsService} from "../services/ugs-service";
 
 let window: any;
 
@@ -17,6 +19,9 @@ export class ExploreContainerComponent {
 
   private window: any;
 
+  private dailyTour: DailyTour;
+  // private readonly  ugsService: UgsService;
+
   private SpeechRecognition;
 
   private SpeechGrammarList;
@@ -30,6 +35,7 @@ export class ExploreContainerComponent {
     @Inject(DOCUMENT) private document: Document,
     private readonly dialogflowService: DialogFlowService,
     private readonly intentHandlerService: IntentHandlerService,
+    private readonly ugsService: UgsService,
     private readonly router: Router
   ) {
     this.window = this.document.defaultView;
@@ -42,6 +48,8 @@ export class ExploreContainerComponent {
     this.SpeechRecognitionEvent =
       this.window.SpeechRecognitionEvent ||
       this.window.webkitSpeechRecognitionEvent;
+
+    this.ugsService = ugsService;
   }
 
   startListening() {
@@ -67,9 +75,20 @@ export class ExploreContainerComponent {
     console.log('Sending following text to dialog flow: ' + text);
     const result = await this.dialogflowService.detectIntent(text);
     this.result = result;
+    this.processResult(result);
     this.intentHandlerService.setResult(result);
     this.intentHandlerService.handleIntent(result);
 
     this.router.navigate(['/result']);
   }
+
+  processResult(result: any): void {
+    console.log("process intent: " + result.params['wateramount']['numberValue']);
+    this.dailyTour = new DailyTour();
+    this.dailyTour.waterAmount = result.params['wateramount']['numberValue'];
+    this.ugsService.saveDailyTour(this.dailyTour).subscribe((dailyTour) => {
+      console.log("dailyTour saved: " + dailyTour)
+    });
+  }
+
 }
