@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 export class IntentHandlerService {
   constructor() {}
 
-  handleIntent(intent: string) {
+  handleIntent(result: any) {
     switch (intent) {
-      case 'INTENT':
+      case 'UFA_GALLO_READ_WATERLEVEL_LITER':
         break;
-
+      case 'UFA_GALLO_READ_WATERLEVEL_LITER':
+        break;
       default:
         break;
     }

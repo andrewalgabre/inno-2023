@@ -1,8 +1,8 @@
 <div id="container">
-  <strong>{{ name }}</strong>
-
   <ion-list>
-    <p style="text-align: left" class="title-textarea">Mein Bauerntagebuch</p>
+    <p style="text-align: left; font-size: 22px" class="title-textarea">
+      Wie kann ich dir helfen?
+    </p>
     <ion-item>
       <ion-input [(ngModel)]="textAreaInput"></ion-input>
     </ion-item>
@@ -22,18 +22,16 @@
     <span style="font-style: italic"> {{ result?.queryText }}</span>
   </div>
 
-  <ion-buttons slot="secondary">
-    <ion-button
-      fill="solid"
-      class="button-send"
-      (click)="sendMessageToDialogFlow()"
-    >
-      <ion-icon slot="start" name="person-circle"></ion-icon>
-      Nachricht senden
-    </ion-button>
-  </ion-buttons>
+  <ion-button
+    fill="solid"
+    class="button-send"
+    (click)="sendMessageToDialogFlow()"
+  >
+    <ion-icon slot="start" name="send"></ion-icon>
+    Senden
+  </ion-button>
 
-  <ion-fab horizontal="end" vertical="end">
+  <ion-fab>
     <ion-fab-button (click)="startListening()">
       <ion-icon name="mic"></ion-icon>
     </ion-fab-button>
