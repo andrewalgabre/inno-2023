@@ -20,7 +20,7 @@ export class IntentHandlerService {
       case 'UFA_GALLO_UPDATE_WATERLEVEL_LITER':
         // let title = result.params.
 
-        let waterAmount = result.params['wateramount']['numberValue'];
+        let waterAmount = result.params['waterAmount']['numberValue'];
 
         // const result =  this.ugsService.
         let herdeOptions = [
@@ -67,6 +67,33 @@ export class IntentHandlerService {
 
         this.chatService.addSteps(stepsFood);
         break;
+
+      case 'UFA_GALLO_UPDATE_FOOD_AND_WATER':
+        // let title = result.params.
+
+        const food2 = result.params['amountFood']['numberValue'];
+        let waterAmount2 = result.params['waterAmount']['numberValue'];
+        debugger;
+        // const result =  this.ugsService.
+        const herdeOptionsFoodAndWater = [
+          {
+            id: 1008,
+            name: 'Amrock',
+          },
+          {
+            id: 1013,
+            name: 'Yokohama',
+          },
+        ];
+        const stepsFoodAndWater = [
+          {
+            title: `Bei Welcher Herde möchten Sie ${food2}kg Futter und ${waterAmount2} Liter Wasser erfassen?`,
+            options: herdeOptionsFoodAndWater,
+          },
+        ];
+
+        this.chatService.addSteps(stepsFoodAndWater);
+        break;
       default:
         break;
     }
@@ -77,13 +104,13 @@ export class IntentHandlerService {
 
     switch (response.intent) {
       case 'UFA_GALLO_UPDATE_WATERLEVEL_LITER':
-        const waterAmount = response.params['wateramount']['numberValue'];
+        const waterAmount = response.params['waterAmount']['numberValue'];
         let dailyTour = new DailyTour();
 
         dailyTour.id = flockId;
         dailyTour.waterAmount = waterAmount;
 
-        await this.ugsService.saveDailyTour(dailyTour);
+        // await this.ugsService.saveDailyTour(dailyTour);
 
         break;
       case 'UFA_GALLO_UPDATE_FOOD':
@@ -93,9 +120,19 @@ export class IntentHandlerService {
         dailyTourFood.id = flockId;
         dailyTourFood.forageAmount = food;
 
-        await this.ugsService.saveDailyTour(dailyTourFood);
+        // await this.ugsService.saveDailyTour(dailyTourFood);
 
         break;
+
+      case 'UFA_GALLO_UPDATE_FOOD_AND_WATER':
+        const food2 = response.params['amountFood']['numberValue'];
+        let waterAmount2 = response.params['waterAmount']['numberValue'];
+
+        dailyTourFood.id = flockId;
+        dailyTourFood.forageAmount = food2;
+        dailyTourFood.waterAmount = waterAmount2;
+
+      // await this.ugsService.saveDailyTour(dailyTourFood);
     }
   }
 
