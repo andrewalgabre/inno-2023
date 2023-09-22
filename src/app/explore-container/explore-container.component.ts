@@ -84,14 +84,8 @@ export class ExploreContainerComponent {
 
   async clearMessage() {
     this.textAreaInput = '';
-    var text = ' ';
-    console.log('Sending following text to dialog flow: ' + text);
-    const result = await this.dialogflowService.detectIntent(text);
-    this.result = result;
-    this.intentHandlerService.setResult(result);
-    this.intentHandlerService.handleResponseWithIntent(result);
-
-    this.router.navigate(['/result']);
+    this.result = null;
+    this.intentHandlerService.resetResult();
   }
 
   processResult(result: any): void {
