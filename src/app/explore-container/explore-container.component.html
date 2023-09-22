@@ -21,19 +21,30 @@
     <br />
     <span style="font-style: italic"> {{ result?.queryText }}</span>
   </div>
+  
+  <div class="button-section">
+    <ion-button
+            fill="solid"
+            class="button-send"
+            (click)="sendMessageToDialogFlow()"
+    >
+      <ion-icon slot="start" name="send"></ion-icon>
+      Senden
+    </ion-button>
+    <ion-button
+            fill="solid"
+            class="button-trash"
+            (click)="clearMessage()"
+    >
+      <ion-icon slot="start" name="trash"></ion-icon>
+      Löschen
+    </ion-button>
 
-  <ion-button
-    fill="solid"
-    class="button-send"
-    (click)="sendMessageToDialogFlow()"
-  >
-    <ion-icon slot="start" name="send"></ion-icon>
-    Senden
-  </ion-button>
-
-  <ion-fab>
-    <ion-fab-button (click)="startListening()">
-      <ion-icon name="mic"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab>
+      <ion-fab-button (click)="startListening()">
+        <ion-icon name="mic"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  
 </div>

@@ -82,6 +82,18 @@ export class ExploreContainerComponent {
     this.router.navigate(['/result']);
   }
 
+  async clearMessage(){
+    this.textAreaInput = " "
+    var text = " ";
+    console.log('Sending following text to dialog flow: ' + text);
+    const result = await this.dialogflowService.detectIntent(text);
+    this.result = result;
+    this.intentHandlerService.setResult(result);
+    this.intentHandlerService.handleIntent(result);
+
+    this.router.navigate(['/result']);
+  }
+
   processResult(result: any): void {
     console.log(
       'process intent: ' + result.params['wateramount']['numberValue']
