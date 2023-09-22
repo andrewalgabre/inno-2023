@@ -110,7 +110,7 @@ export class IntentHandlerService {
         dailyTour.id = flockId;
         dailyTour.waterAmount = waterAmount;
 
-        // await this.ugsService.saveDailyTour(dailyTour);
+        await this.ugsService.saveDailyTour(dailyTour);
 
         break;
       case 'UFA_GALLO_UPDATE_FOOD':
@@ -120,7 +120,7 @@ export class IntentHandlerService {
         dailyTourFood.id = flockId;
         dailyTourFood.forageAmount = food;
 
-        // await this.ugsService.saveDailyTour(dailyTourFood);
+        await this.ugsService.saveDailyTour(dailyTourFood);
 
         break;
 
