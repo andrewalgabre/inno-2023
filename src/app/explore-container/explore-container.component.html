@@ -7,8 +7,9 @@
       <ion-input [(ngModel)]="textAreaInput"></ion-input>
     </ion-item>
   </ion-list>
-
-  <div style="padding: 12px">
+  <br />
+  <br />
+  <!-- <div style="padding: 12px">
     <br />
     <strong style="font-size: 24px; font-weight: 300">{{
       speechResult
@@ -20,22 +21,18 @@
     <span style="color: blue; font-weight: 800"> {{ result?.intent }}</span>
     <br />
     <span style="font-style: italic"> {{ result?.queryText }}</span>
-  </div>
-  
+  </div> -->
+
   <div class="button-section">
     <ion-button
-            fill="solid"
-            class="button-send"
-            (click)="sendMessageToDialogFlow()"
+      fill="solid"
+      class="button-send"
+      (click)="sendMessageToDialogFlow()"
     >
       <ion-icon slot="start" name="send"></ion-icon>
       Senden
     </ion-button>
-    <ion-button
-            fill="solid"
-            class="button-trash"
-            (click)="clearMessage()"
-    >
+    <ion-button fill="solid" class="button-trash" (click)="clearMessage()">
       <ion-icon slot="start" name="trash"></ion-icon>
       Löschen
     </ion-button>
@@ -46,5 +43,4 @@
       </ion-fab-button>
     </ion-fab>
   </div>
-  
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { IntentHandlerService } from '../services/intent-handler.service';
 
@@ -11,18 +12,28 @@ export class SearchResultContainerComponent implements OnInit {
 
   chat$ = this.chatService.currentChat$;
 
+  public alertButtons = ['OK'];
+  alertOpen = false;
+
   constructor(
     private readonly intentHandlerService: IntentHandlerService,
-    private readonly chatService: ChatService
+    private readonly chatService: ChatService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
     this.chatService.startChat();
   }
 
-  handleAnswer(flockId: number) {
+  async handleAnswer(flockId: number) {
     let intent = this.intentHandlerService.resultSubject$.getValue().intent;
-    this.intentHandlerService.handleAnswerWithIntent(flockId);
-    debugger;
+    await this.intentHandlerService.handleAnswerWithIntent(flockId);
+    this.alertOpen = true;
+  }
+
+  navigateBack() {
+    this.alertOpen = false;
+    this.intentHandlerService.resetResult();
+    this.router.navigate(['/']);
   }
 }

@@ -29,8 +29,6 @@ export class ExploreContainerComponent {
 
   speechResult = '';
 
-  result;
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private readonly dialogflowService: DialogFlowService,
@@ -64,7 +62,10 @@ export class ExploreContainerComponent {
     });
 
     recognition.addEventListener('end', async (e) => {
-      this.sendMessageToDialogFlow();
+      setTimeout(() => {
+        this.sendMessageToDialogFlow();
+      }, 1000);
+
       console.log(e);
     });
     recognition.start();
@@ -74,7 +75,6 @@ export class ExploreContainerComponent {
     var text = this.textAreaInput;
     console.log('Sending following text to dialog flow: ' + text);
     const result = await this.dialogflowService.detectIntent(text);
-    this.result = result;
 
     this.intentHandlerService.setResult(result);
     this.intentHandlerService.handleResponseWithIntent(result);
@@ -84,7 +84,6 @@ export class ExploreContainerComponent {
 
   async clearMessage() {
     this.textAreaInput = '';
-    this.result = null;
     this.intentHandlerService.resetResult();
   }
 

@@ -12,13 +12,11 @@ export class ChatService {
   constructor() {}
 
   startChat() {
-    debugger;
     const firstChat = this.chatStepsSubject$.getValue()[0];
     this.currenChatSubject$.next(firstChat);
   }
 
   addSteps(steps: any[]) {
-    debugger;
     this.chatStepsSubject$.next(steps);
   }
 

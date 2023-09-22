@@ -7,24 +7,33 @@
 
   <div style="padding: 16px">
     <div *ngIf="result$ | async as result">
-      <span style="font-size: 24px; font-weight: 300">{{ result.intent }}</span>
+      <span style="font-size: 8px; color: lightgray">{{ result.intent }}</span>
     </div>
 
     <div
       class="chat fadeInLeft animated delay-1s"
       *ngIf="chat$ | async as chat"
     >
-      <h2>{{ chat.title }}</h2>
+      <h1>{{ chat.title }}</h1>
 
-      <ion-button
-        *ngFor="let option of chat.options"
-        fill="solid"
-        class="button-send fadeIn animated"
-        (click)="handleAnswer(option.id)"
-      >
-        <ion-icon slot="start" name="send"></ion-icon>
-        {{ option.name }}
-      </ion-button>
+      <div *ngFor="let option of chat.options">
+        <ion-button
+          fill="solid"
+          class="button-send fadeIn animated"
+          (click)="handleAnswer(option.id)"
+        >
+          <ion-icon slot="start" name="send"></ion-icon>
+          {{ option.name }}
+        </ion-button>
+      </div>
     </div>
   </div>
+
+  <ion-alert
+    [isOpen]="alertOpen"
+    header="Gespeichert"
+    message="Die Daten wurden erfolgreich gespeichert"
+    [buttons]="alertButtons"
+    (didDismiss)="navigateBack()"
+  ></ion-alert>
 </ion-content>
