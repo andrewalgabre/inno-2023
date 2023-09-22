@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { DailyTour } from '../model/daily-tour';
 import { DialogFlowService } from '../services/dialog-flow.service';
 import { IntentHandlerService } from '../services/intent-handler.service';
-import {DailyTour} from "../model/daily-tour";
-import {UgsService} from "../services/ugs-service";
+import { UgsService } from '../services/ugs-service';
 
 let window: any;
 
@@ -75,20 +75,16 @@ export class ExploreContainerComponent {
     console.log('Sending following text to dialog flow: ' + text);
     const result = await this.dialogflowService.detectIntent(text);
     this.result = result;
-    this.processResult(result);
+
     this.intentHandlerService.setResult(result);
-    this.intentHandlerService.handleIntent(result);
+    this.intentHandlerService.handleResponseWithIntent(result);
 
     this.router.navigate(['/result']);
   }
 
   processResult(result: any): void {
-    console.log("process intent: " + result.params['wateramount']['numberValue']);
-    this.dailyTour = new DailyTour();
-    this.dailyTour.waterAmount = result.params['wateramount']['numberValue'];
-    this.ugsService.saveDailyTour(this.dailyTour).subscribe((dailyTour) => {
-      console.log("dailyTour saved: " + dailyTour)
-    });
+    console.log(
+      'process intent: ' + result.params['wateramount']['numberValue']
+    );
   }
-
 }

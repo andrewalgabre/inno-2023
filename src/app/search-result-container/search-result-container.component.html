@@ -10,10 +10,21 @@
       <span style="font-size: 24px; font-weight: 300">{{ result.intent }}</span>
     </div>
 
-    <div *ngIf="chat$ | async as chat">
+    <div
+      class="chat fadeInLeft animated delay-1s"
+      *ngIf="chat$ | async as chat"
+    >
       <h2>{{ chat.title }}</h2>
 
-      <div *ngFor="let options of chat.options">{{ options.name }}</div>
+      <ion-button
+        *ngFor="let option of chat.options"
+        fill="solid"
+        class="button-send fadeIn animated"
+        (click)="handleAnswer(option.id)"
+      >
+        <ion-icon slot="start" name="send"></ion-icon>
+        {{ option.name }}
+      </ion-button>
     </div>
   </div>
 </ion-content>

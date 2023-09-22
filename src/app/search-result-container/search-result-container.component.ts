@@ -19,4 +19,10 @@ export class SearchResultContainerComponent implements OnInit {
   ngOnInit() {
     this.chatService.startChat();
   }
+
+  handleAnswer(flockId: number) {
+    let intent = this.intentHandlerService.resultSubject$.getValue().intent;
+    this.intentHandlerService.handleAnswerWithIntent(flockId);
+    debugger;
+  }
 }

@@ -1,35 +1,42 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { DialogflowResponse } from 'server/src/dialog-flow.service';
+import { DailyTour } from '../model/daily-tour';
 import { ChatService } from './chat.service';
+import { UgsService } from './ugs-service';
 
 @Injectable({ providedIn: 'root' })
 export class IntentHandlerService {
   resultSubject$ = new BehaviorSubject<DialogflowResponse>(null);
   result$ = this.resultSubject$.asObservable();
 
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly ugsService: UgsService
+  ) {}
 
-  handleIntent(result: DialogflowResponse) {
+  async handleResponseWithIntent(result: DialogflowResponse) {
     debugger;
     switch (result.intent) {
       case 'UFA_GALLO_UPDATE_WATERLEVEL_LITER':
         // let title = result.params.
         debugger;
         const waterAmount = result.params['wateramount']['numberValue'];
+
+        // const result =  this.ugsService.
         const herdeOptions = [
           {
-            id: 1,
-            name: 'Herde 1',
+            id: 1008,
+            name: 'Amrock',
           },
           {
-            id: 2,
-            name: 'Herde 2',
+            id: 1013,
+            name: 'Yokohama',
           },
         ];
         const steps = [
           {
-            title: `Bei Welcher Herde möchten Sie ${waterAmount}L abziehen?`,
+            title: `Bei Welcher Herde möchten Sie ${waterAmount}L erfassen?`,
             options: herdeOptions,
           },
         ];
@@ -39,6 +46,23 @@ export class IntentHandlerService {
       case 'UFA_GALLO_READ_WATERLEVEL_LITER':
         break;
       default:
+        break;
+    }
+  }
+
+  async handleAnswerWithIntent(flockId) {
+    let response = this.resultSubject$.getValue();
+
+    switch (response.intent) {
+      case 'UFA_GALLO_UPDATE_WATERLEVEL_LITER':
+        debugger;
+        const waterAmount = response.params['wateramount']['numberValue'];
+        let dailyTour = new DailyTour();
+
+        dailyTour.id = flockId;
+        dailyTour.waterAmount = waterAmount;
+
+        await this.ugsService.saveDailyTour(dailyTour);
         break;
     }
   }

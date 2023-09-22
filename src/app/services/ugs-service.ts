@@ -1,16 +1,14 @@
-import {HttpClient} from "@angular/common/http";
-import {Inject} from "@angular/core";
-import {Observable} from "rxjs";
-import {DailyTour} from "../model/daily-tour";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { DailyTour } from '../model/daily-tour';
 
+@Injectable({ providedIn: 'root' })
 export class UgsService {
-  constructor(
-    private http: HttpClient,
-    private apiPath: string,
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  saveDailyTour(dailyTour: DailyTour): Observable<DailyTour> {
+  saveDailyTour(dailyTour: DailyTour): Promise<DailyTour> {
     var apiPath = 'http://localhost:4200/rest/dailytours/save';
-    return this.http.post<DailyTour>(apiPath, dailyTour);
+    return lastValueFrom(this.http.post<DailyTour>(apiPath, dailyTour));
   }
 }

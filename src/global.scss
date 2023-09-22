@@ -16,7 +16,7 @@
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import '@ionic/angular/css/display.css';
+@import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
@@ -24,3 +24,205 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@keyframes pulseBig {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 58, 30, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 0 30px rgba(224, 58, 30, 0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -120%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInLeftUpBig {
+  from {
+    transform: translate3d(-30%, 100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.fadeInLeftUpBig {
+  animation-name: fadeInLeftUpBig;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(-150%, 150%, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+.fadeOutDown {
+  animation-name: fadeOutDown;
+}
+
+@keyframes fadeInUpBig {
+  from {
+    transform: translate3d(0, 2000px, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.fadeInUpBig {
+  animation-name: fadeInUpBig;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.fadeInLeft {
+  animation-name: fadeInLeft;
+}
+
+.fadeInAndSlideIn {
+  animation-name: fadeInAndSlideIn;
+}
+
+.fadeOutAndSlideOut {
+  animation-name: fadeOutAndSlideOut;
+}
+
+.slideInUp {
+  animation-name: slideInUp;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.pulseBig {
+  animation-name: pulseBig;
+}
+
+.slideInDown {
+  animation-name: slideInDown;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.delay-025s {
+  animation-delay: 0.25s;
+}
+
+.animated.delay-05s {
+  animation-delay: 0.5s;
+}
+
+.animated.delay-1s {
+  animation-delay: 1s;
+}
+
+.animated.delay-1-5s {
+  animation-delay: 1.5s;
+}
+
+.animated.delay-2s {
+  animation-delay: 2s;
+}
+
+.animated.delay-3s {
+  animation-delay: 3s;
+}
+
+.animated.delay-4s {
+  animation-delay: 4s;
+}
+
+.animated.delay-5s {
+  animation-delay: 5s;
+}
+
+.animated.fast {
+  animation-duration: 800ms;
+}
+
+.animated.faster {
+  animation-duration: 500ms;
+}
+
+.animated.slow {
+  animation-duration: 2s;
+}
+
+.animated.slower {
+  animation-duration: 3s;
+}
