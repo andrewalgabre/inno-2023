@@ -1,27 +1,39 @@
 <div id="container">
   <strong>{{ name }}</strong>
-  <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
 
   <ion-list>
-    <p style="text-align: left" class="title-textarea" >Mein Bauerntagebuch</p>
+    <p style="text-align: left" class="title-textarea">Mein Bauerntagebuch</p>
     <ion-item>
-      <ion-textarea [(ngModel)]="textAreaInput" class="textarea-dairy" placeholder=" Welche Probleme bestehen auf dem Hof?"></ion-textarea>
+      <ion-input [(ngModel)]="textAreaInput"></ion-input>
     </ion-item>
   </ion-list>
+
+  <div style="padding: 12px">
+    <br />
+    <strong>{{ speechResult }}</strong>
+
+    <br />
+    <br />
+
+    <span style="color: blue; font-weight: 800"> {{ result.intent }}</span>
+    <br />
+    <span style="font-style: italic"> {{ result.queryText }}</span>
+  </div>
+
   <ion-buttons slot="secondary">
-    <ion-button fill="solid" class="button-send" (click)="sendMessageToDialogFlow()" >
-      <ion-icon slot="start" name="person-circle" ></ion-icon>
+    <ion-button
+      fill="solid"
+      class="button-send"
+      (click)="sendMessageToDialogFlow()"
+    >
+      <ion-icon slot="start" name="person-circle"></ion-icon>
       Nachricht senden
     </ion-button>
   </ion-buttons>
-  <div class="words" contenteditable="true">
-    <p></p>
-  </div>
-  <div style="padding-top: 25px">
-    <ion-fab horizontal="center" vertical="bottom" slot="fixed" style="bottom: 0">
-      <ion-fab-button>
-        <ion-icon name="mic"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </div>
+
+  <ion-fab horizontal="end" vertical="end">
+    <ion-fab-button (click)="startListening()">
+      <ion-icon name="mic"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>

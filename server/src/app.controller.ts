@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { DialogFlowService, Locale } from './dialog-flow.service';
 
@@ -9,13 +9,12 @@ export class AppController {
     private readonly dialogFlowService: DialogFlowService,
   ) {}
 
-  @Get()
-  getHello(): any {
-    return this.dialogFlowService.detectIntent(
-      '1',
-      'Wassermenge 10 Liter erfassen',
-      Locale.de,
-    );
-    // return this.appService.getHello();
+  @Post('sendAnswer')
+  getHello(@Body() body: { text: string; locale: Locale }): any {
+    if (!body?.text) throw Error('no search terms passed');
+
+    const locale = body?.locale || 'de';
+    const sessionId = 'innodays2023';
+    return this.dialogFlowService.detectIntent(sessionId, body.text, Locale.de);
   }
 }

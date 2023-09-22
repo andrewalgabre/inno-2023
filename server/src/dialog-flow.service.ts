@@ -64,20 +64,24 @@ export class DialogFlowService {
 
     // map response (filter out fields starting with $ eg. "strinValue = $xxx")
     // let params = result[0].queryResult.parameters.fields;
-    let params = result[0].queryResult.fulfillmentMessages[0].payload?.fields;
+    // let params = result[0].queryResult.fulfillmentMessages[0].payload?.fields;
 
-    params = Object.keys(params).reduce(
-      (acc, cur) =>
-        params[cur]?.stringValue?.startsWith('$')
-          ? acc
-          : { ...acc, [cur]: params[cur] },
-      {},
-    );
-
+    // params = Object.keys(params).reduce(
+    //   (acc, cur) =>
+    //     params[cur]?.stringValue?.startsWith('$')
+    //       ? acc
+    //       : { ...acc, [cur]: params[cur] },
+    //   {},
+    // );
     return {
       intent: result[0].queryResult.intent.displayName,
       queryText: result[0].queryResult.queryText,
-      params,
     } as DialogflowResponse;
+
+    // return {
+    //   intent: result[0].queryResult.intent.displayName,
+    //   queryText: result[0].queryResult.queryText,
+    //   params,
+    // } as DialogflowResponse;
   }
 }

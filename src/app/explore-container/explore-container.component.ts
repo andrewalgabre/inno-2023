@@ -1,6 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { google } from "@google-cloud/dialogflow/build/protos/protos";
-import { DOCUMENT } from "@angular/common";
+import { DialogFlowService } from '../services/dialog-flow.service';
 
 let window: any;
 
@@ -10,74 +10,59 @@ let window: any;
   styleUrls: ['./explore-container.component.scss'],
 })
 export class ExploreContainerComponent {
-
   @Input() name?: string;
   @Input() textAreaInput?: string;
-  
+
   private window: any;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    
-    console.log(document);
-    
-    // @ts-ignore
+  private SpeechRecognition;
+
+  private SpeechGrammarList;
+  private SpeechRecognitionEvent;
+
+  speechResult = '';
+
+  result;
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private readonly dialogflowService: DialogFlowService
+  ) {
     this.window = this.document.defaultView;
-    
-    //debugger;
-    const SpeechRecognition = this.window.SpeechRecognition || this.window.webkitSpeechRecognition;
-    const SpeechGrammarList = this.window.SpeechGrammarList || this.window.webkitSpeechGrammarList;
-    const SpeechRecognitionEvent = this.window.SpeechRecognitionEvent || this.window.webkitSpeechRecognitionEvent;
-    
-    
-    const recognition = new SpeechRecognition();
+    this.SpeechRecognition =
+      this.window.SpeechRecognition || this.window.webkitSpeechRecognition;
+
+    this.SpeechGrammarList =
+      this.window.SpeechGrammarList || this.window.webkitSpeechGrammarList;
+
+    this.SpeechRecognitionEvent =
+      this.window.SpeechRecognitionEvent ||
+      this.window.webkitSpeechRecognitionEvent;
+  }
+
+  startListening() {
+    const recognition = new this.SpeechRecognition();
     recognition.interimResults = true;
-    
-    let p = document.createElement('p')
-    const words = document.querySelector('.words')
-    words?.appendChild(p);
+
     recognition.addEventListener('result', (e: any) => {
       console.log(e.result);
 
-      const transcript: any = Array.from(e.results)
-        .map(result => [0]) //result[0]
-        //.map(result => result.transcript)
-        //.join('')
-      
-      p.textContent = transcript;
-      
-      if(e.results[0].isFinal) {
-        p = document.createElement('p');
-        words?.appendChild(p);
-      }
-      
-      console.log(transcript)
+      this.speechResult = e.results[0][0].transcript;
+      const transcript: any = Array.from(e.results).map((result) => [0]); //result[0]
+      //.map(result => result.transcript)
+      //.join('')
+      console.log(transcript);
     });
-    
-    recognition.addEventListener('end', recognition.start);
+
+    // recognition.addEventListener('end', recognition.start);
     recognition.start();
-
-    // addEventListener("audiostart", (event) => {});
-    //
-    // const audiostart = document.querySelector('ion-fab-button');
-    //
-    // recognition.addEventListener("audiostart", () => {
-    //   console.log("Audio capturing started");
-    // });
-    
-    
-    
-    
-    
-
-    
   }
 
   sendMessageToDialogFlow(): void {
     var text = this.textAreaInput;
-    console.log("Sending following text to dialog flow: " + text)
+    console.log('Sending following text to dialog flow: ' + text);
+    this.dialogflowService.detectIntent(text).subscribe((result) => {
+      this.result = result;
+    });
   }
-
-
 }
-
-
