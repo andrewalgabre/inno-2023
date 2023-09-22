@@ -12,6 +12,9 @@ $RECYCLE.BIN/
 *.log
 log.txt
 
+#server
+/server/node_modules
+/server/dist
 
 /.sourcemaps
 /.versions
