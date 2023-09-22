@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { DialogFlowService } from '../services/dialog-flow.service';
+import { IntentHandlerService } from '../services/intent-handler.service';
 
 let window: any;
 
@@ -26,7 +28,9 @@ export class ExploreContainerComponent {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private readonly dialogflowService: DialogFlowService
+    private readonly dialogflowService: DialogFlowService,
+    private readonly intentHandlerService: IntentHandlerService,
+    private readonly router: Router
   ) {
     this.window = this.document.defaultView;
     this.SpeechRecognition =
@@ -41,29 +45,31 @@ export class ExploreContainerComponent {
   }
 
   startListening() {
-    this.speechResult = '';
+    this.intentHandlerService.resetResult();
     const recognition = new this.SpeechRecognition();
     recognition.interimResults = true;
 
     recognition.addEventListener('result', (e: any) => {
       console.log(e.result);
 
-      this.speechResult = e.results[0][0].transcript;
-      const transcript: any = Array.from(e.results).map((result) => [0]); //result[0]
-      //.map(result => result.transcript)
-      //.join('')
-      console.log(transcript);
+      this.textAreaInput = e.results[0][0].transcript;
     });
 
-    // recognition.addEventListener('end', recognition.start);
+    recognition.addEventListener('end', async (e) => {
+      this.sendMessageToDialogFlow();
+      console.log(e);
+    });
     recognition.start();
   }
 
-  sendMessageToDialogFlow(): void {
+  async sendMessageToDialogFlow() {
     var text = this.textAreaInput;
     console.log('Sending following text to dialog flow: ' + text);
-    this.dialogflowService.detectIntent(text).subscribe((result) => {
-      this.result = result;
-    });
+    const result = await this.dialogflowService.detectIntent(text);
+    this.result = result;
+    this.intentHandlerService.setResult(result);
+    this.intentHandlerService.handleIntent(result);
+
+    this.router.navigate(['/result']);
   }
 }

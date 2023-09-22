@@ -1,0 +1,19 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Result</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div style="padding: 16px">
+    <div *ngIf="result$ | async as result">
+      <span style="font-size: 24px; font-weight: 300">{{ result.intent }}</span>
+    </div>
+
+    <div *ngIf="chat$ | async as chat">
+      <h2>{{ chat.title }}</h2>
+
+      <div *ngFor="let options of chat.options">{{ options.name }}</div>
+    </div>
+  </div>
+</ion-content>

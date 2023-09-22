@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+import { IntentHandlerService } from './intent-handler.service';
 // Imports the Dialogflow library
 export enum Locale {
   'de' = 'de-CH',
@@ -18,9 +20,17 @@ export interface DialogflowResponse {
 export class DialogFlowService {
   url = 'http://localhost:3000';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private intentHandlerService: IntentHandlerService
+  ) {}
 
-  detectIntent(text: string) {
-    return this.http.post(this.url + '/sendAnswer', { text });
+  async detectIntent(text: string): Promise<DialogflowResponse> {
+    const result = await lastValueFrom(
+      this.http.post<DialogflowResponse>(this.url + '/sendAnswer', { text })
+    );
+
+    this.intentHandlerService.setResult(result);
+    return result;
   }
 }
